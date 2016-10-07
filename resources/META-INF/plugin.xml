@@ -1,0 +1,34 @@
+<idea-plugin version="2">
+  <id>cz.jiripudil.intellij.nette.factoryGenerator</id>
+  <name>Nette factory interface generator</name>
+  <version>1.0.0</version>
+  <vendor email="me@jiripudil.cz" url="https://jiripudil.cz">Jiří Pudil</vendor>
+
+  <description><![CDATA[
+    <a href="https://github.com/jiripudil/intellij-nette-factory-generator">Github</a>
+    <p>This plugin allows you to quickly generate factory interface for your components and other classes.</p>
+  ]]></description>
+
+  <change-notes><![CDATA[
+    <h2>1.0.0</h2>
+    <ul>
+      <li>Initial release.</li>
+    </ul>
+  ]]></change-notes>
+
+  <idea-version since-build="143.0"/>
+
+  <depends>com.intellij.modules.lang</depends>
+  <depends>com.jetbrains.php</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <intentionAction>
+      <className>cz.jiripudil.intellij.nette.factoryGenerator.intention.GenerateFactoryInterfaceIntention</className>
+      <category>Nette</category>
+      <descriptionDirectoryName>GenerateFactoryInterfaceIntention</descriptionDirectoryName>
+    </intentionAction>
+  </extensions>
+
+  <actions/>
+
+</idea-plugin>
