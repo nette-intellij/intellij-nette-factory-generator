@@ -1,5 +1,6 @@
 package cz.jiripudil.intellij.nette.factoryGenerator.ui;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
@@ -97,7 +98,7 @@ public class GenerateFactoryInterfaceDialog extends JDialog {
             parameters.add(parameter.getParameter());
         }
 
-        FactoryInterfaceGenerator generator = new FactoryInterfaceGenerator();
+        FactoryInterfaceGenerator generator = ApplicationManager.getApplication().getComponent(FactoryInterfaceGenerator.class);
         generator.generateFactory(project, psiFile, originalClass, name, parameters);
 
         dispose();

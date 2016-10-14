@@ -1,5 +1,6 @@
 package cz.jiripudil.intellij.nette.factoryGenerator.codeGeneration;
 
+import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiFile;
@@ -9,10 +10,11 @@ import com.jetbrains.php.config.PhpProjectConfigurationFacade;
 import com.jetbrains.php.lang.psi.elements.Parameter;
 import com.jetbrains.php.lang.psi.elements.PhpClass;
 import com.jetbrains.php.refactoring.PhpFileCreator;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class FactoryInterfaceGenerator {
+public class FactoryInterfaceGenerator implements ApplicationComponent {
     public PsiFile generateFactory(Project project, PsiFile psiFile, PhpClass originalClass, String factoryName, ArrayList<Parameter> parameters) {
         String fileName = factoryName + ".php";
         if (psiFile.getContainingDirectory().findFile(fileName) != null) {
@@ -77,5 +79,19 @@ public class FactoryInterfaceGenerator {
             fileName,
             contentBuilder.toString()
         );
+    }
+
+    @Override
+    public void initComponent() {
+    }
+
+    @Override
+    public void disposeComponent() {
+    }
+
+    @NotNull
+    @Override
+    public String getComponentName() {
+        return "nette-factory-generator.generator";
     }
 }

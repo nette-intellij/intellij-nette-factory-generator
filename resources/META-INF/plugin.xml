@@ -21,6 +21,12 @@
   <depends>com.intellij.modules.lang</depends>
   <depends>com.jetbrains.php</depends>
 
+  <application-components>
+    <component>
+      <implementation-class>cz.jiripudil.intellij.nette.factoryGenerator.codeGeneration.FactoryInterfaceGenerator</implementation-class>
+    </component>
+  </application-components>
+
   <extensions defaultExtensionNs="com.intellij">
     <intentionAction>
       <className>cz.jiripudil.intellij.nette.factoryGenerator.intention.GenerateFactoryInterfaceIntention</className>
