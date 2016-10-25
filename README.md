@@ -1,5 +1,8 @@
 # Nette factory interface generator
 
+[![Version](http://phpstorm.espend.de/badge/9166/version)](https://plugins.jetbrains.com/plugin/9166)
+[![Downloads](http://phpstorm.espend.de/badge/9166/downloads)](https://plugins.jetbrains.com/plugin/9166)
+
 This plugin allows you to quickly generate factory interface for your components and other classes.
 
 ## Installation and requirements
