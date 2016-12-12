@@ -1,5 +1,6 @@
 package cz.jiripudil.intellij.nette.factoryGenerator.codeGeneration;
 
+import com.intellij.codeStyle.CodeStyleFacade;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
@@ -7,6 +8,7 @@ import com.intellij.psi.PsiFile;
 import com.jetbrains.php.config.PhpLanguageFeature;
 import com.jetbrains.php.config.PhpLanguageLevel;
 import com.jetbrains.php.config.PhpProjectConfigurationFacade;
+import com.jetbrains.php.lang.PhpFileType;
 import com.jetbrains.php.lang.psi.elements.Parameter;
 import com.jetbrains.php.lang.psi.elements.PhpClass;
 import com.jetbrains.php.refactoring.PhpFileCreator;
@@ -26,18 +28,36 @@ public class FactoryInterfaceGenerator implements ApplicationComponent {
         String trimmedNamespace = StringUtil.trimStart(StringUtil.trimEnd(namespace, "\\"), "\\");
         StringBuilder contentBuilder = new StringBuilder();
 
-        contentBuilder.append("\n\nnamespace ")
+        CodeStyleFacade cs = CodeStyleFacade.getInstance(project);
+        boolean useTab = cs.useTabCharacter(PhpFileType.INSTANCE);
+        int indentSize = cs.getIndentSize(PhpFileType.INSTANCE);
+        String indent = useTab ? "\t" : StringUtil.repeat(" ", indentSize);
+        String newline = cs.getLineSeparator();
+
+        contentBuilder.append(StringUtil.repeat(newline, 2))
+            .append("namespace ")
             .append(trimmedNamespace)
-            .append(";\n\n\n");
+            .append(";")
+            .append(StringUtil.repeat(newline, 3));
 
         contentBuilder.append("interface ")
             .append(factoryName)
-            .append("\n{\n\n\t");
+            .append(newline)
+            .append("{")
+            .append(StringUtil.repeat(newline, 2))
+            .append(indent);
 
         if ( ! languageLevel.hasFeature(PhpLanguageFeature.RETURN_TYPES)) {
-            contentBuilder.append("/**\n\t * @return ")
+            contentBuilder.append("/**")
+                .append(newline)
+                .append(indent)
+                .append(" * @return ")
                 .append(originalClass.getName())
-                .append("\n\t */\n\t");
+                .append(newline)
+                .append(indent)
+                .append(" */")
+                .append(newline)
+                .append(indent);
         }
 
         contentBuilder.append("public function create(");
@@ -73,7 +93,10 @@ public class FactoryInterfaceGenerator implements ApplicationComponent {
                 .append(originalClass.getName());
         }
 
-        contentBuilder.append(";\n\n}\n");
+        contentBuilder.append(";")
+            .append(StringUtil.repeat(newline, 2))
+            .append("}")
+            .append(newline);
 
         return PhpFileCreator.createPhpFile(
             project,
