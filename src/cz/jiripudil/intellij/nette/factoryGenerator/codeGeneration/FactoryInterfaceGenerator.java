@@ -30,15 +30,17 @@ public class FactoryInterfaceGenerator implements ApplicationComponent {
             .append(trimmedNamespace)
             .append(";\n\n\n");
 
-        if ( ! languageLevel.hasFeature(PhpLanguageFeature.RETURN_TYPES)) {
-            contentBuilder.append("/**\n * @return ")
-                .append(originalClass.getName())
-                .append("\n */\n");
-        }
-
         contentBuilder.append("interface ")
             .append(factoryName)
-            .append("\n{\n\n\tpublic function create(");
+            .append("\n{\n\n\t");
+
+        if ( ! languageLevel.hasFeature(PhpLanguageFeature.RETURN_TYPES)) {
+            contentBuilder.append("/**\n\t * @return ")
+                .append(originalClass.getName())
+                .append("\n\t */\n\t");
+        }
+
+        contentBuilder.append("public function create(");
 
         // factory parameters
         for (int index = 0; index < parameters.size(); index++) {
