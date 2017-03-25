@@ -26,6 +26,11 @@ public class GenerateFactoryInterfaceIntention extends PsiElementBaseIntentionAc
     }
 
     @Override
+    public boolean startInWriteAction() {
+        return false;
+    }
+
+    @Override
     public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement psiElement) throws IncorrectOperationException {
         PhpClass phpClass = PhpPsiUtil.getParentByCondition(psiElement, PhpClass.INSTANCEOF);
 
