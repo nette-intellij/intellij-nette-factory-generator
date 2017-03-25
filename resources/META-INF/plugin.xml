@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>cz.jiripudil.intellij.nette.factoryGenerator</id>
   <name>Nette factory interface generator</name>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <vendor email="me@jiripudil.cz" url="https://jiripudil.cz">Jiří Pudil</vendor>
 
   <description><![CDATA[
@@ -10,6 +10,11 @@
   ]]></description>
 
   <change-notes><![CDATA[
+    <h2>1.1.1</h2>
+    <ul>
+      <li>Fixed compatibility with 2017.1 (see <a href="https://github.com/jiripudil/intellij-nette-factory-generator/issues/2">#2</a>)</a>
+    </ul>
+
     <h2>1.1.0</h2>
     <ul>
       <li>Fixed misplacement of phpdoc for PHP < 7.0 (<a href="https://github.com/jiripudil/intellij-nette-factory-generator/issues/1">#1</a>)</li>
