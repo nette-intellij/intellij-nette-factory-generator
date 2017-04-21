@@ -32,31 +32,30 @@ public class FactoryInterfaceGenerator implements ApplicationComponent {
         boolean useTab = cs.useTabCharacter(PhpFileType.INSTANCE);
         int indentSize = cs.getIndentSize(PhpFileType.INSTANCE);
         String indent = useTab ? "\t" : StringUtil.repeat(" ", indentSize);
-        String newline = cs.getLineSeparator();
 
-        contentBuilder.append(StringUtil.repeat(newline, 2))
+        contentBuilder.append(StringUtil.repeat("\n", 2))
             .append("namespace ")
             .append(trimmedNamespace)
             .append(";")
-            .append(StringUtil.repeat(newline, 3));
+            .append(StringUtil.repeat("\n", 3));
 
         contentBuilder.append("interface ")
             .append(factoryName)
-            .append(newline)
+            .append("\n")
             .append("{")
-            .append(StringUtil.repeat(newline, 2))
+            .append(StringUtil.repeat("\n", 2))
             .append(indent);
 
         if ( ! languageLevel.hasFeature(PhpLanguageFeature.RETURN_TYPES)) {
             contentBuilder.append("/**")
-                .append(newline)
+                .append("\n")
                 .append(indent)
                 .append(" * @return ")
                 .append(originalClass.getName())
-                .append(newline)
+                .append("\n")
                 .append(indent)
                 .append(" */")
-                .append(newline)
+                .append("\n")
                 .append(indent);
         }
 
@@ -94,9 +93,9 @@ public class FactoryInterfaceGenerator implements ApplicationComponent {
         }
 
         contentBuilder.append(";")
-            .append(StringUtil.repeat(newline, 2))
+            .append(StringUtil.repeat("\n", 2))
             .append("}")
-            .append(newline);
+            .append("\n");
 
         return PhpFileCreator.createPhpFile(
             project,
