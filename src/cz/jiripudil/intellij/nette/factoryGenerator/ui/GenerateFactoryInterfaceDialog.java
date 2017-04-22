@@ -2,6 +2,8 @@ package cz.jiripudil.intellij.nette.factoryGenerator.ui;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.fileEditor.FileEditorManager;
+import com.intellij.openapi.fileEditor.OpenFileDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.ui.CollectionListModel;
@@ -25,6 +27,7 @@ public class GenerateFactoryInterfaceDialog extends JDialog {
     private JButton buttonCancel;
     private JBTextField interfaceName;
     private JBList<ConstructorParameter> factoryParams;
+    private JCheckBox openFile;
 
     @NotNull private Project project;
     @Nullable private PsiFile psiFile;
@@ -99,7 +102,12 @@ public class GenerateFactoryInterfaceDialog extends JDialog {
         }
 
         FactoryInterfaceGenerator generator = ApplicationManager.getApplication().getComponent(FactoryInterfaceGenerator.class);
-        generator.generateFactory(project, psiFile, originalClass, name, parameters);
+        PsiFile file = generator.generateFactory(project, psiFile, originalClass, name, parameters);
+
+        if (openFile.isSelected()) {
+            OpenFileDescriptor descriptor = new OpenFileDescriptor(project, file.getVirtualFile());
+            FileEditorManager.getInstance(project).openEditor(descriptor, true);
+        }
 
         dispose();
     }
