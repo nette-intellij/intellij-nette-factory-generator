@@ -4,7 +4,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
-import com.intellij.ui.CollectionComboBoxModel;
+import com.intellij.ui.CollectionListModel;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBTextField;
 import com.jetbrains.php.lang.psi.elements.Method;
@@ -24,7 +24,7 @@ public class GenerateFactoryInterfaceDialog extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JBTextField interfaceName;
-    private JBList factoryParams;
+    private JBList<ConstructorParameter> factoryParams;
 
     @NotNull private Project project;
     @Nullable private PsiFile psiFile;
@@ -71,19 +71,19 @@ public class GenerateFactoryInterfaceDialog extends JDialog {
 
     private void createUIComponents() {
         interfaceName = new JBTextField();
-        factoryParams = new JBList();
+        factoryParams = new JBList<>();
     }
 
     private void initFactoryParams() {
-        Method ctor = originalClass.getConstructor();
+        Method constructor = originalClass.getConstructor();
         java.util.List<ConstructorParameter> list = new ArrayList<>();
-        if (ctor != null) {
-            for (Parameter parameter : ctor.getParameters()) {
+        if (constructor != null) {
+            for (Parameter parameter : constructor.getParameters()) {
                 list.add(new ConstructorParameter(parameter));
             }
         }
 
-        ListModel<ConstructorParameter> model = new CollectionComboBoxModel<>(list);
+        ListModel<ConstructorParameter> model = new CollectionListModel<>(list);
         factoryParams.setModel(model);
         factoryParams.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
@@ -92,9 +92,9 @@ public class GenerateFactoryInterfaceDialog extends JDialog {
         String name = interfaceName.getText();
         ArrayList<Parameter> parameters = new ArrayList<>();
 
-        ListModel model = factoryParams.getModel();
+        ListModel<ConstructorParameter> model = factoryParams.getModel();
         for (int index : factoryParams.getSelectedIndices()) {
-            ConstructorParameter parameter = (ConstructorParameter) model.getElementAt(index);
+            ConstructorParameter parameter = model.getElementAt(index);
             parameters.add(parameter.getParameter());
         }
 
